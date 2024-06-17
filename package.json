@@ -1,0 +1,25 @@
+{
+  "name": "abi-map-api",
+  "version": "1.0.0",
+  "description": "API for the Herzen University Map",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/herzen-vis-lab/abiturients-map-api.git"
+  },
+  "author": "Artem Shmarev",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/herzen-vis-lab/abiturients-map-api/issues"
+  },
+  "homepage": "https://github.com/herzen-vis-lab/abiturients-map-api#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
