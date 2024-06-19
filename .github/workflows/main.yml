@@ -17,6 +17,7 @@ jobs:
         run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build and Push Docker Image
-        run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/${{ vars.PACKAGE_NAME }}:${{ github.sha }} .
-          docker push ghcr.io/${{ github.repository_owner }}/${{ vars.PACKAGE_NAME }}:${{ github.sha }}
+        uses: docker/build-push-action@v5
+        with:
+          file: ${{ env.SERVICE }}/Dockerfile
+          push: false
