@@ -4,6 +4,7 @@ const app = express();
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 const apiRouter = require('./app/apiRouter');
+const sequelize = require('./app/sequelize');
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -17,6 +18,11 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+app.get('/', (req, res) => {
+  console.log(req.connection);	
+  res.send('API работает, Адрес swagger /api/docs')
+});
+app.use('/api', apiRouter);
 
 /**
  * @swagger
@@ -27,9 +33,4 @@ app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  *     description: Типы точек
  */
 
-app.use('/api', apiRouter);
-
-const PORT = 3000;
-app.listen(PORT);
-
-console.debug("Server listening on port: " + PORT);
+app.listen(3000);

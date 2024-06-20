@@ -1,20 +1,21 @@
 //app/point/pointController.js
 
-const getPoints = (req, res) => {
-  res.send([
-     {
-       id: "1",
-       longitude: 1.1,
-       latitude: 1.1,
-       changedAt: "2022-01-01",
-     }
-    ]);
+const { Op } = require('sequelize')
+const Point = require('./pointModel');
+
+//get
+const getPoints = async (req, res) => {
+  let result = await Point.findAll();
+  res.send(result);
 };
 
 //get
-const getPointById = (req, res) => {
+const getPointById = async (req, res) => {
   const pointId = req.params.pointId; 
-  res.send(`Ответ на запрос для точки с id ${pointId}`);
+  let result = await Point.findAll(
+    {where: {id: pointId }}
+  );
+  res.send(result);
 };
 
 //post
