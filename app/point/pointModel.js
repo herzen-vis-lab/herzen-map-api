@@ -18,25 +18,33 @@
  *       names:
  *         type: object
  *         properties:
- *           language:
+ *           ru:
  *             type: string
- *             description: Язык описания
- *             example: ru
- *           text:
+ *             description: Описание на русском языке
+ *             example: Учебное здание
+ *           en:
  *             type: string
- *             description: Описание
- *             example: Старый сад
+ *             description: Описание на английском языке
+ *             example: Education building
+ *           zh:
+ *             type: string
+ *             description: Описание на китайском языке
+ *             example: 文教建筑
  *       descriptions:
  *         type: object
  *         properties:
- *           language:
+ *           ru:
  *             type: string
- *             description: Язык описания
- *             example: ru
- *           text:
+ *             description: Описание на русском языке
+ *             example: Учебное здание
+ *           en:
  *             type: string
- *             description: Описание
- *             example: Старый сад
+ *             description: Описание на английском языке
+ *             example: Education building
+ *           zh:
+ *             type: string
+ *             description: Описание на китайском языке
+ *             example: 文教建筑             
  *       type_id:
  *         type: integer
  *         description: Тип

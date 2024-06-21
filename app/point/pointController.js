@@ -26,7 +26,18 @@ const getPointById = async (req, res) => {
 //post
 const createPoint = async (req, res) => {
   const body = req.body;
-  const point = await Point.create({ id: uuidv4(), type_id: body.type_id, latitude: body.latitude, longitude: body.longitude, web: body.web, names: body.names, descriptions: body.descriptions, videos: body.videos, photos: body.photos, status_id: body.status_id});
+  const point = await Point.create({ 
+     id: uuidv4(), 
+     type_id: body.type_id,
+     latitude: body.latitude,
+     longitude: body.longitude,
+     web: body.web, 
+     names: body.names, 
+     descriptions: body.descriptions, 
+     videos: body.videos, 
+     photos: body.photos,
+     status_id: body.status_id
+  });
   res.send(`${point.id}`);
 };
 
@@ -51,7 +62,6 @@ const updatePoint = async (req, res) => {
       photos: body.photos,
       status_id: body.status_id
     });
-    console.log(foundPoint);
     res.send(`${foundPoint.id}`);
   } catch (error) {
     console.error(error);

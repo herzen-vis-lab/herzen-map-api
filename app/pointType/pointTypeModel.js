@@ -3,6 +3,8 @@
 /**
  * @swagger
  * definitions:
+ *   Names:
+ *     type
  *   PointType:
  *     type: object
  *     properties:
@@ -13,14 +15,18 @@
  *       names:
  *         type: object
  *         properties:
- *           language:
+ *           ru:
  *             type: string
- *             description: Язык описания
- *             example: ru
- *           text:
- *             type: string
- *             description: Описание
+ *             description: Описание на русском языке
  *             example: Учебное здание
+ *           en:
+ *             type: string
+ *             description: Описание на английском языке
+ *             example: Education building
+ *           zh:
+ *             type: string
+ *             description: Описание на китайском языке
+ *             example: 文教建筑物
  *       icon:
  *         type: string
  *         description: Иконка
