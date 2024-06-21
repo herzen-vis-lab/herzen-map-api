@@ -6,6 +6,7 @@ const swaggerUI = require('swagger-ui-express');
 const apiRouter = require('./app/apiRouter');
 const sequelize = require('./app/sequelize');
 
+// Блок swagger
 const swaggerOptions = {
   swaggerDefinition: {
     info: {
@@ -18,11 +19,6 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
-app.get('/', (req, res) => {
-  console.log(req.connection);	
-  res.send('API работает, Адрес swagger /api/docs')
-});
-app.use('/api', apiRouter);
 
 /**
  * @swagger
@@ -33,4 +29,17 @@ app.use('/api', apiRouter);
  *     description: Типы точек
  */
 
+// Получаем возможность работы с body
+app.use(express.json());
+
+// Проверка работоспособности
+app.get('/', (req, res) => {
+  console.log(req.connection);
+  res.send('API работает, Адрес swagger /api/docs')
+});
+
+// Роутинг
+app.use('/api', apiRouter);
+
+// Конфиг порта
 app.listen(3000);
