@@ -4,7 +4,7 @@
   "description": "API for the Herzen University Map",
   "main": "server.js",
   "scripts": {
-    "test": "jest"
+    "test": "npx jest --detectOpenHandles"
   },
   "repository": {
     "type": "git",
