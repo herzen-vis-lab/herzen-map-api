@@ -34,8 +34,7 @@ app.use(express.json());
 
 // Проверка работоспособности
 app.get('/', (req, res) => {
-  console.log(req.connection);
-  res.send('API работает, Адрес swagger /api/docs')
+  res.json({'message':'API работает, Адрес swagger /api/docs.'})
 });
 
 // Роутинг
@@ -43,3 +42,6 @@ app.use('/api', apiRouter);
 
 // Конфиг порта
 app.listen(3000);
+
+// Для тестирования
+module.exports = app;

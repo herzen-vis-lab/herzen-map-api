@@ -5,22 +5,36 @@ const pointTypeController = require('./pointType/pointTypeController');
 
 /**
  * @swagger
- * /api/point:
+ * /api/point/project/{projectId}:
  *   get:
- *     summary: Получить информацию о всех точках
- *     description: Получить информацию о всех точках
+ *     summary: Получить информацию о всех точках проекта
+ *     description: Получить информацию о всех точках проекта
  *     tags: [Point]
+ *     parameters:
+ *      - name: projectId
+ *        description: Уникальный идентификатор проекта
+ *        in: path
+ *        required: true
+ *        type: string
  *     responses:
  *       200:
- *         description: Ok
+ *         description: Успешно
  *         schema:
  *           $ref: '#/definitions/Points'
+ *       400:
+ *         description: Ошибка клиента
+ *         schema:
+ *           $ref: '#/definitions/Error'
+ *       500:
+ *         description: Ошибка сервера
+ *         schema:
+ *           $ref: '#/definitions/Error'
 */
-router.get('/point', pointController.getPoints);
+router.get('/point/project/:projectId', pointController.getPoints);
 
 /**
  * @swagger
- * /api/point/{pointId}:
+ * /api/point/id/{pointId}:
  *   get:
  *     summary: Получить данные конкретной точки
  *     description: Получить данные конкретной точки
@@ -33,11 +47,19 @@ router.get('/point', pointController.getPoints);
  *        type: string
  *     responses:
  *       200:
- *         description: Ok
+ *         description: Успешно
  *         schema:
- *           $ref: '#/definitions/Point' 
+ *           $ref: '#/definitions/Point'
+ *       400:
+ *         description: Ошибка клиента
+ *         schema:
+ *           $ref: '#/definitions/Error'
+ *       500:
+ *         description: Ошибка сервера
+ *         schema: 
+ *           $ref: '#/definitions/Error'
 */
-router.get('/point/:pointId', pointController.getPointById);
+router.get('/point/id/:pointId', pointController.getPointById);
 
 /**
  * @swagger
@@ -48,19 +70,27 @@ router.get('/point/:pointId', pointController.getPointById);
  *     tags: [Point]
  *     parameters:
  *      - in: body
- *        name: user
- *        description: Данные для создания.
+ *        name: Point
+ *        description: Данные для создания
  *        schema:
  *          $ref: '#/definitions/PointBody'
  *     responses:
  *       200:
- *         description: Ok
+ *         description: Успешно
+ *       400:
+ *         description: Ошибка клиента
+ *         schema:
+ *           $ref: '#/definitions/Error'
+ *       500:
+ *         description: Ошибка сервера
+ *         schema: 
+ *           $ref: '#/definitions/Error' 
 */
 router.post('/point', pointController.createPoint);
 
 /**
  * @swagger
- * /api/point/{pointId}:
+ * /api/point/id/{pointId}:
  *   patch:
  *     summary: Изменить данные точки
  *     description: Изменить данные точки
@@ -68,23 +98,27 @@ router.post('/point', pointController.createPoint);
  *     parameters:
  *      - in: path
  *        name: pointId
- *        description: Уникальный идентификатор
+ *        description: Уникальный идентификатор точки
  *        required: true
  *        type: string
  *      - in: body
- *        name: user
- *        description: Данные для изменения.
+ *        name: Point
+ *        description: Данные для изменения
  *        schema:
  *          $ref: '#/definitions/PointBody' 
  *     responses:
  *       200:
- *         description: Ok
- *       404:
- *         description: Point not found
+ *         description: Успешно
+ *       400:
+ *         description: Ошибка клиента
+ *         schema:
+ *           $ref: '#/definitions/Error'
  *       500:
- *         description: Internal server error
+ *         description: Ошибка сервера
+ *         schema: 
+ *           $ref: '#/definitions/Error'
 */
-router.patch('/point/:pointId', pointController.updatePoint);
+router.patch('/point/id/:pointId', pointController.updatePoint);
 
 /**
  * @swagger
@@ -98,6 +132,14 @@ router.patch('/point/:pointId', pointController.updatePoint);
  *         description: Ok
  *         schema:
  *           $ref: '#/definitions/PointTypes'
+ *       400:
+ *         description: Ошибка клиента
+ *         schema:
+ *           $ref: '#/definitions/Error'
+ *       500:
+ *         description: Ошибка сервера
+ *         schema: 
+ *           $ref: '#/definitions/Error'           
 */
 router.get('/pointType', pointTypeController.getPointTypes);
 

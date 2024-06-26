@@ -4,9 +4,28 @@
 /**
  * @swagger
  * definitions:
+ *   Error:
+ *     type: object
+ *     properties:
+ *       status:
+ *         type: integer
+ *         description: HTTP-код ошибки 
+ *         example: 404
+ *       error:
+ *         type: string
+ *         description: Текст ошибки
+ *         example: Точка не найдена
+ *       stack:
+ *         type: string
+ *         description: Стэк вызовов
+ *         example: ...
  *   PointBody:
  *     type: object
  *     properties:
+ *       project_id:
+ *         type: string
+ *         description: Идентификатор проекта
+ *         example: 1
  *       longitude:
  *         type: float
  *         description: Широта
@@ -79,9 +98,16 @@
  *          description: Идентификатор точки
  *          example: b6c5f523-206f-42d3-b9fa-f29808b41d39  
  *   Points:
- *     type: array
- *     items:
- *       $ref: '#/definitions/Point' 
+ *     type: object
+ *     properties:
+ *       count:
+ *         type: integer
+ *         description: Количество записей в ответе
+ *         example: 5
+ *       data:
+ *         type: array
+ *         items:
+ *           $ref: '#/definitions/Point' 
  */
 
 
@@ -93,7 +119,7 @@ const Point = sequelize.define(
   {
     id: {
       primaryKey: true,
-      type: DataTypes.UUID,
+      type: DataTypes.UUID
     },
     longitude: {
       type: DataTypes.DOUBLE
@@ -114,13 +140,17 @@ const Point = sequelize.define(
       type: DataTypes.INTEGER
     },
     web: {
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
+      validate: { isUrl: true }
     },
     photos: {
       type: DataTypes.ARRAY(DataTypes.TEXT)
     },
     videos: {
       type: DataTypes.ARRAY(DataTypes.TEXT)
+    },
+    project_id: {
+      type: DataTypes.TEXT
     }
   },
   {
@@ -132,7 +162,7 @@ const Point = sequelize.define(
 async function updateDbTables() {
   try {
     await Point.sync({ alter: true })
-    console.log('Таблица для модели `Point` только что была создана заново!')
+    //console.log('Таблица для модели `Point` только что была создана заново!')
   } catch (e) {
     console.log('Таблица для модели `Point` не обновлена.', e)
   }

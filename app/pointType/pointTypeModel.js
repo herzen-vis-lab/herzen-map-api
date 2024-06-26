@@ -3,8 +3,6 @@
 /**
  * @swagger
  * definitions:
- *   Names:
- *     type
  *   PointType:
  *     type: object
  *     properties:
@@ -63,7 +61,7 @@ const PointType = sequelize.define(
 async function updateDbTables() {
   try {
     await PointType.sync({ alter: true })
-    console.log('Таблица для модели `PointType` только что была создана заново!')
+    //console.log('Таблица для модели `PointType` только что была создана заново!')
   } catch (e) {
     console.log('Таблица для модели `PointType` не обновлена.', e)
   }
