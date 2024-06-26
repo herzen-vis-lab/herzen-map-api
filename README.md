@@ -1,5 +1,13 @@
 # map-api
+Контейнер слушает внутренний порт 3000 и использует следующие переменные окружения:
+* POSTGRES_HOST=...
+* POSTGRES_PORT=5432
+* POSTGRES_USER=...
+* POSTGRES_PASSWORD=...
+* POSTGRES_DBNAME=map
+
 Сваггер доступен по адресу /api/docs
+
 
 Что почитать:
 * Tutorial on automatically generating & serving swagger-ui documentation based on jsdocs.
