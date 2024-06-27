@@ -3,7 +3,7 @@ const Point = require('./pointModel');
 const { v4: uuidv4 } = require('uuid');
 const { validate: isValidUUID } = require('uuid');
 
-//check
+//check body
 const isValidBody = (body) => {
   if(1===1) { 	
     if(body.project_id){
@@ -31,6 +31,8 @@ const getPoints = async (req, res) => {
       return; 
     } else {
       const count = Object.keys(foundPoints).length;    
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
       res.json({'count': count, 'data': foundPoints});
       return;
     };
