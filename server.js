@@ -41,7 +41,9 @@ app.get('/', (req, res) => {
 app.use('/api', apiRouter);
 
 // Конфиг порта
-app.listen(3000);
+const PORT = 3001;
+app.listen(PORT);
+console.log(`server listen on port ${PORT}`); 
 
 // Для тестирования
 module.exports = app;
