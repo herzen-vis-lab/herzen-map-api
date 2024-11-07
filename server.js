@@ -1,5 +1,6 @@
 //server.js
 const express = require('express');
+const cors = require('cors') // подключение CORS
 const app = express();
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
@@ -31,6 +32,9 @@ app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 // Получаем возможность работы с body
 app.use(express.json());
+
+// Разрещение CORS от всех источников
+app.use(cors());
 
 // Проверка работоспособности
 app.get('/', (req, res) => {
