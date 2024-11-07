@@ -143,4 +143,26 @@ router.patch('/point/id/:pointId', pointController.updatePoint);
 */
 router.get('/pointType', pointTypeController.getPointTypes);
 
+/**
+ * @swagger
+ * /api/pointType:
+ *   post:
+ *     summary: Создать тип точки
+ *     description: Создать тип точки
+ *     tags: [Point type]
+ *     responses:
+ *       200:
+ *         description: Ok
+ *         schema:
+ *           $ref: '#/definitions/PointType'
+ *       400:
+ *         description: Ошибка клиента
+ *         schema:
+ *           $ref: '#/definitions/Error'
+ *       500:
+ *         description: Ошибка сервера
+ *         schema: 
+ *           $ref: '#/definitions/Error'           
+*/
+router.post('/pointType', pointTypeController.createPointType);
 module.exports = router;
