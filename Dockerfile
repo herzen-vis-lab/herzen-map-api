@@ -1,4 +1,4 @@
-FROM node
+FROM node:20
 
 # Optimise for production
 ENV NODE_ENV production
@@ -17,4 +17,4 @@ USER node
 
 # Make port 3001 accessible outside of the container
 EXPOSE 3001
-CMD "npm" "start"
+CMD ["npm", "start"]

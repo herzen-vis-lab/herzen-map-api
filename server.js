@@ -1,11 +1,9 @@
-//server.js
 const express = require('express');
-const cors = require('cors') // подключение CORS
+const cors = require('cors')
 const app = express();
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 const apiRouter = require('./app/apiRouter');
-const sequelize = require('./app/sequelize');
 
 // Блок swagger
 const swaggerOptions = {
