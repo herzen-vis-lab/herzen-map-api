@@ -1,4 +1,5 @@
 const { Sequelize } = require('sequelize');
+
 const host = process.env.POSTGRES_HOST;
 const port = process.env.POSTGRES_PORT;
 const user = process.env.POSTGRES_USER;
@@ -17,4 +18,4 @@ async function checkDb() {
 
 checkDb();
 
-module.exports = sequelize;;
+module.exports = sequelize;
