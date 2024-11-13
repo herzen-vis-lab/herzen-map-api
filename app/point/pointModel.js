@@ -143,6 +143,10 @@ const Point = sequelize.define(
       type: DataTypes.TEXT,
       validate: { isUrl: true }
     },
+    picture: {
+      type: DataTypes.TEXT,
+      validate: { isUrl: true }
+    },
     photos: {
       type: DataTypes.ARRAY(DataTypes.TEXT)
     },
@@ -162,7 +166,6 @@ const Point = sequelize.define(
 async function updateDbTables() {
   try {
     await Point.sync({ alter: true })
-    //console.log('Таблица для модели `Point` только что была создана заново!')
   } catch (e) {
     console.log('Таблица для модели `Point` не обновлена.', e)
   }

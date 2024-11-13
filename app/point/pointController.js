@@ -5,15 +5,10 @@ const { validate: isValidUUID } = require('uuid');
 
 //check body
 const isValidBody = (body) => {
-  if(1===1) { 	
-    if(body.project_id){
-      console.log(typeof(body.project_id));
-    
-    };
-    return true;
-  } else {
+  if (!body) {
     return false;
-  };
+  }
+  return true;
 };
 
 //get
@@ -24,7 +19,7 @@ const getPoints = async (req, res) => {
     const foundPoints = await Point.findAll(
       {where: {project_id: projectId}}
     );
-    if(typeof(foundPoints[0]) == "undefined") {	//если ничего на нашёд, ORM возвращает объект []  
+    if(typeof(foundPoints[0]) == "undefined") {
       statusCode = 400;
       res.status(statusCode);
       res.json({'status': statusCode, 'message':`Точки для проекта ${projectId} не найдены`, stack:'app/point/pointController.js getPoints'});      
@@ -76,7 +71,7 @@ const getPointById = async (req, res) => {
 //post
 const createPoint = async (req, res) => {
   const body = req.body;
-  if (isValidBody(body)) { //отдельная функция проверки body
+  if (isValidBody(body)) {
     try {
       const CreatedPoint = await Point.create({ 
         id: uuidv4(), 
@@ -86,71 +81,87 @@ const createPoint = async (req, res) => {
         web: body.web, 
         names: body.names, 
         descriptions: body.descriptions, 
-        videos: body.videos, 
-        photos: body.photos,
+        picture: body.picture,
         status_id: body.status_id,
         project_id: body.project_id	  
       });
-      res.send(`Точка ${CreatedPoint.id} создана`);
-      return;
+      res.status(201).json({ message: `Точка ${CreatedPoint.id} создана`, id: CreatedPoint.id });
     } catch (error) {
-      statusCode = 500;
-      res.status(statusCode);
-      res.json({'status': statusCode, 'message':error.message, 'stack': error.stack});
-      return;
-    };
+      res.status(500).json({
+        status: 500,
+        message: 'Ошибка сервера при создании точки',
+        error: error.message
+      });
+    }
   } else {
-    statusCode = 400;
-    res.status(statusCode);
-    res.json({'status': statusCode, 'message':'Формат Body не соответствует спецификации на API', 'stack': 'app/point/pointController.js createPoint'});
-    return;
-  };
+    res.status(400).json({
+      status: 400,
+      message: 'Формат Body не соответствует спецификации на API'
+    });
+  }
 };
 
 //patch
 const updatePoint = async (req, res) => {
-  let statusCode = 200;
   const pointId = req.params.pointId;
-  if (!isValidUUID(pointId)) { //проверка на формат UUID
-    statusCode = 400;
-    res.status(statusCode);
-    res.json({'status': statusCode, 'message':`Формат ${pointId} не соответствуют UUID`, stack:'app/point/pointController.js updatePoint'});
-    return;
-  }	
-  const FoundPoint = await Point.findOne({ where: { id: pointId } });
-  if(FoundPoint === null) { //если ничего на нашёл, ORM возвращает объект со значением null
-    statusCode = 400;
-    res.status(statusCode);
-    res.json({'status': statusCode, 'message':`Точка ${pointId} не найдена`, stack:'app/point/pointController.js updatePoint'});
-    return;
-  } else {
+
+  if (!isValidUUID(pointId)) {
+    return res.status(400).json({
+      status: 400,
+      message: `Формат ${pointId} не соответствует UUID`,
+      stack: 'app/point/pointController.js updatePoint'
+    });
+  }
+
+  try {
+    const foundPoint = await Point.findOne({ where: { id: pointId } });
+
+    // Проверка, найден ли объект
+    if (foundPoint === null) {
+      return res.status(404).json({
+        status: 404,
+        message: `Точка ${pointId} не найдена`,
+        stack: 'app/point/pointController.js updatePoint'
+      });
+    }
+
     const body = req.body;
-    if(isValidBody(body)) { //отдельная функция проверки body	  
-      try {	  
-        await FoundPoint.update({     
-          type_id: body.type_id,
-          latitude: body.latitude,
-          longitude: body.longitude,
-          web: body.web,
-          names: body.names,
-          descriptions: body.descriptions,
-          videos: body.videos,
-          photos: body.photos,
-          status_id: body.status_id
-       });
-       res.send(`Точка ${FoundPoint.id} обновлена`);     
-      } catch (error) {
-        status = 500;
-        res.json({'message':error.message, 'stack': error.stack});
-        return;      
-      };
-    } else {
-      statusCode = 400;
-      res.status(statusCode);
-      res.json({'status': statusCode, 'message':'Формат Body не соответствует спецификации на API', 'stack': 'app/point/pointController.js updatePoint'});
-      return;
-    };	    
-  };
+
+    // Проверка валидности тела запроса
+    if (!isValidBody(body)) {
+      return res.status(400).json({
+        status: 400,
+        message: 'Формат Body не соответствует спецификации на API',
+        stack: 'app/point/pointController.js updatePoint'
+      });
+    }
+
+    // Обновление объекта
+    await foundPoint.update({
+      type_id: body.type_id,
+      latitude: body.latitude,
+      longitude: body.longitude,
+      web: body.web,
+      names: body.names,
+      descriptions: body.descriptions,
+      picture: body.picture,
+      status_id: body.status_id
+    });
+
+    res.status(200).json({
+      message: `Точка ${foundPoint.id} обновлена`,
+      id: foundPoint.id
+    });
+
+  } catch (error) {
+    // Обработка ошибок
+    res.status(500).json({
+      status: 500,
+      message: 'Ошибка сервера при обновлении точки',
+      error: error.message,
+      stack: error.stack
+    });
+  }
 };
 
 module.exports = {
